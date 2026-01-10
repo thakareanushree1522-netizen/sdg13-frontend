@@ -111,7 +111,7 @@ button:hover {
 <body>
 
 <div class="container">
-  <h1>🌍 Carbon Footprint Checker</h1>
+  <h1>  Carbon Footprint Checker</h1>
   <p class="subtitle">SDG 13 – Climate Action</p>
 
   <label>Daily Transport Distance (km)</label>
@@ -138,17 +138,18 @@ async function checkImpact() {
   resultBox.style.display = "block";
   resultBox.style.background = "#fff3cd";
   resultBox.style.color = "#856404";
-  resultBox.innerText = "⏳ Connecting to backend...";
+  resultBox.innerText = " Connecting to backend...";
 
+  // Prepare payload matching your Flask backend
   const payload = {
-    transport_km: Number(document.getElementById("transport").value),
-    electricity_units: Number(document.getElementById("electricity").value),
-    meat_meals: Number(document.getElementById("meat").value)
+    transport: Number(document.getElementById("transport").value),
+    electricity: Number(document.getElementById("electricity").value),
+    meat: Number(document.getElementById("meat").value)
   };
 
   try {
     const response = await fetch(
-      "https://sdg13-backend.onrender.com/predict",
+      "https://sdg13-backend.onrender.com/carbon",  // Use your backend URL + /carbon
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -158,26 +159,21 @@ async function checkImpact() {
 
     const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(JSON.stringify(data));
-    }
-
+    // Success
     resultBox.style.background = "#e8f5e9";
     resultBox.style.color = "#1b5e20";
     resultBox.innerText =
-      "🌱 Estimated Carbon Footprint: " +
-      data.carbon_footprint +
-      " kg CO₂";
+      `🌱 Carbon Score: ${data.carbon_score}\nImpact Level: ${data.impact_level}`;
 
   } catch (error) {
     resultBox.style.background = "#ffebee";
     resultBox.style.color = "#c62828";
-    resultBox.innerText =
-      "❌ Backend responded, but request format is incorrect";
+    resultBox.innerText = " Unable to connect to backend";
     console.error("Backend error:", error);
   }
 }
 </script>
+
 </body>
 </html>
 
