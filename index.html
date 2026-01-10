@@ -2,153 +2,47 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SDG 13 – Climate AI & Carbon Calculator</title>
+<title>🌍 SDG 13 Climate AI & Carbon Calculator</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #d4fc79, #96e6a1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
+* { box-sizing: border-box; margin:0; padding:0; font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+body { min-height:100vh; background: linear-gradient(135deg,#d4fc79,#96e6a1); display:flex; justify-content:center; align-items:center; padding:20px; }
 
 /* ===== CONTAINER ===== */
-.container {
-  width: 450px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-  overflow: hidden;
-}
+.container { width:450px; background:#fff; border-radius:16px; box-shadow:0 12px 30px rgba(0,0,0,0.15); overflow:hidden; }
 
 /* ===== HEADER ===== */
-.header {
-  background: linear-gradient(135deg, #2e7d32, #1b5e20);
-  color: white;
-  text-align: center;
-  padding: 16px;
-}
-
-.header h1 { font-size: 20px; }
-.header p { font-size: 13px; opacity: 0.9; }
+.header { background: linear-gradient(135deg,#2e7d32,#1b5e20); color:#fff; text-align:center; padding:16px; }
+.header h1 { font-size:20px; }
+.header p { font-size:13px; opacity:0.9; }
 
 /* ===== TABS ===== */
-.tabs {
-  display: flex;
-  border-bottom: 1px solid #ddd;
-}
-
-.tab {
-  flex: 1;
-  text-align: center;
-  padding: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  background: #f1f8e9;
-  transition: background 0.2s;
-}
-
-.tab.active {
-  background: #e8f5e9;
-}
+.tabs { display:flex; border-bottom:1px solid #ddd; }
+.tab { flex:1; text-align:center; padding:10px; cursor:pointer; font-weight:bold; background:#f1f8e9; transition:background 0.2s; }
+.tab.active { background:#e8f5e9; }
 
 /* ===== CONTENT AREAS ===== */
-.tab-content {
-  display: none;
-  padding: 15px;
-  max-height: 500px;
-  overflow-y: auto;
-}
-
-.tab-content.active {
-  display: block;
-}
+.tab-content { display:none; padding:15px; max-height:500px; overflow-y:auto; }
+.tab-content.active { display:block; }
 
 /* ===== CARBON CALCULATOR ===== */
-label { font-size: 13px; font-weight: 600; color: #333; }
-input[type="number"] {
-  width: 100%;
-  margin: 6px 0 16px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-input:focus { outline: none; border-color: #2e7d32; }
-
-button {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #2e7d32, #1b5e20);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-button:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
-
-.result {
-  margin-top: 15px;
-  padding: 12px;
-  border-radius: 10px;
-  font-weight: bold;
-  text-align: center;
-  display: none;
-}
+label { font-size:13px; font-weight:600; color:#333; }
+input[type="number"] { width:100%; margin:6px 0 16px; padding:10px 12px; border-radius:8px; border:1px solid #ccc; font-size:14px; }
+input:focus { outline:none; border-color:#2e7d32; }
+button { width:100%; padding:12px; background:linear-gradient(135deg,#2e7d32,#1b5e20); color:#fff; border:none; border-radius:10px; font-size:15px; font-weight:bold; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s; }
+button:hover { transform:translateY(-2px); box-shadow:0 6px 15px rgba(0,0,0,0.2); }
+.result { margin-top:15px; padding:12px; border-radius:10px; font-weight:bold; text-align:center; display:none; }
 
 /* ===== CHAT ===== */
-.chat-box {
-  background: #f1f8e9;
-  padding: 10px;
-  height: 300px;
-  overflow-y: auto;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.message {
-  max-width: 80%;
-  margin-bottom: 8px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.user { background: #c8e6c9; align-self: flex-end; border-bottom-right-radius: 4px; }
-.bot { background: #ffffff; align-self: flex-start; border-bottom-left-radius: 4px; }
-
-.chat-input { display: flex; }
-.chat-input input {
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-.chat-input input:focus { border-color: #2e7d32; outline: none; }
-.chat-input button {
-  margin-left: 8px;
-  padding: 10px 16px;
-  background: #2e7d32;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.chat-input button:hover { background: #1b5e20; }
+.chat-box { background:#f1f8e9; padding:10px; height:300px; overflow-y:auto; border-radius:10px; margin-bottom:10px; }
+.message { max-width:80%; margin-bottom:8px; padding:10px 14px; border-radius:14px; font-size:14px; line-height:1.4; }
+.user { background:#c8e6c9; align-self:flex-end; border-bottom-right-radius:4px; }
+.bot { background:#ffffff; align-self:flex-start; border-bottom-left-radius:4px; }
+.chat-input { display:flex; }
+.chat-input input { flex:1; padding:10px 12px; border-radius:10px; border:1px solid #ccc; }
+.chat-input input:focus { border-color:#2e7d32; outline:none; }
+.chat-input button { margin-left:8px; padding:10px 16px; background:#2e7d32; color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold; }
+.chat-input button:hover { background:#1b5e20; }
 </style>
 </head>
 
@@ -252,7 +146,8 @@ async function send() {
   chat.scrollTop = chat.scrollHeight;
 
   try {
-    const res = await fetch("https://sdg13-backend.onrender.com/chat", {
+    // 🔹 Replace with your public backend URL
+    const res = await fetch("https://<YOUR_BACKEND_URL>/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text })
@@ -264,14 +159,14 @@ async function send() {
 
   } catch (err) {
     chat.removeChild(thinking);
-    addMessage("❌ Unable to connect to AI backend", "bot");
+    addMessage("❌ Unable to connect to Gemini AI.", "bot");
     console.error(err);
   }
 }
 
 // Send on Enter key
 input.addEventListener("keypress", function(e) {
-  if (e.key === "Enter") send();
+  if(e.key === "Enter") send();
 });
 </script>
 
