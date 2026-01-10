@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SDG 13 – Climate Action</title>
+</head>
+<body>
+
+<h2>  Carbon Footprint Checker</h2>
+<button onclick="checkImpact()">Check Impact</button>
+
+<p id="output"></p>
+
+<script>
+function checkImpact() {
+  fetch("https://YOUR-RENDER-LINK.onrender.com/carbon", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      transport: 2,
+      electricity: 2,
+      food: 1,
+      plastic: 1,
+      ac: 2
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("output").innerText =
+      "Impact Level: " + data.impact_level;
+  });
+}
+</script>
+
+</body>
+</html>
