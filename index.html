@@ -1,35 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>SDG 13 – Climate Action</title>
+<meta charset="UTF-8">
+<title>SDG 13 – Climate Action</title>
+
+<style>
+/* ===== GLOBAL ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d4fc79, #96e6a1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== CARD ===== */
+.container {
+  background: #ffffff;
+  width: 380px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== HEADINGS ===== */
+h1 {
+  text-align: center;
+  font-size: 22px;
+  color: #1b5e20;
+  margin-bottom: 10px;
+}
+
+p.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* ===== INPUTS ===== */
+label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  margin: 6px 0 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.15);
+}
+
+/* ===== BUTTON ===== */
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== RESULT ===== */
+.result {
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f1f8e9;
+  color: #1b5e20;
+  font-weight: bold;
+  text-align: center;
+  display: none;
+}
+
+/* ===== FOOTER NOTE ===== */
+.footer {
+  margin-top: 18px;
+  font-size: 11px;
+  text-align: center;
+  color: #777;
+}
+</style>
 </head>
+
 <body>
 
-<h2>  Carbon Footprint Checker</h2>
-<button onclick="checkImpact()">Check Impact</button>
+<div class="container">
+  <h1>🌍 Carbon Footprint Checker</h1>
+  <p class="subtitle">SDG 13 – Climate Action</p>
 
-<p id="output"></p>
+  <label>Daily Transport Distance (km)</label>
+  <input type="number" id="transport" placeholder="e.g. 20">
+
+  <label>Monthly Electricity Usage (units)</label>
+  <input type="number" id="electricity" placeholder="e.g. 150">
+
+  <label>Meat-based Meals per Week</label>
+  <input type="number" id="meat" placeholder="e.g. 4">
+
+  <button onclick="checkImpact()">Check Impact</button>
+
+  <div class="result" id="result"></div>
+
+  <div class="footer">
+    Awareness tool only • Not a medical or scientific diagnosis
+  </div>
+</div>
 
 <script>
 function checkImpact() {
+  const data = {
+    transport_km: Number(document.getElementById("transport").value),
+    electricity_units: Number(document.getElementById("electricity").value),
+    meat_meals: Number(document.getElementById("meat").value)
+  };
+
   fetch("https://sdg13-backend.onrender.com/predict", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      transport: 2,
-      electricity: 2,
-      food: 1,
-      plastic: 1,
-      ac: 2
-    })
+    body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(data => {
-    document.getElementById("output").innerText =
-      "Impact Level: " + data.impact_level;
+  .then(result => {
+    const box = document.getElementById("result");
+    box.style.display = "block";
+    box.innerText =
+      "🌱 Estimated Carbon Footprint: " +
+      result.carbon_footprint +
+      " kg CO₂";
+  })
+  .catch(() => {
+    const box = document.getElementById("result");
+    box.style.display = "block";
+    box.style.background = "#ffebee";
+    box.style.color = "#c62828";
+    box.innerText = "❌ Unable to connect to backend";
   });
 }
 </script>
 
 </body>
 </html>
+
