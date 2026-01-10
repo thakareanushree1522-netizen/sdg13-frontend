@@ -2,33 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>🌍 SDG 13 Climate AI</title>
+<title>🌍 SDG 13 Climate AI & Carbon Calculator</title>
 
 <style>
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ===== FULL SCREEN ===== */
 body {
-  height: 100vh;
-  width: 100vw;
-  background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d4fc79, #96e6a1);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 /* ===== BIG CONTAINER ===== */
 .container {
-  width: 95vw;              /* almost full screen */
-  height: 95vh;
-  background: white;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  width: 95%;
+  max-width: 1100px;
+  height: 90vh;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -36,38 +36,40 @@ body {
 
 /* ===== HEADER ===== */
 .header {
-  background: #1b5e20;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
   color: white;
   text-align: center;
   padding: 18px;
 }
 
-.header h1 { font-size: 26px; }
+.header h1 { font-size: 24px; }
 .header p { font-size: 14px; opacity: 0.9; }
 
 /* ===== TABS ===== */
 .tabs {
   display: flex;
+  border-bottom: 1px solid #ddd;
 }
 
 .tab {
   flex: 1;
-  padding: 14px;
   text-align: center;
+  padding: 12px;
   cursor: pointer;
-  background: #e8f5e9;
   font-weight: bold;
+  background: #f1f8e9;
 }
 
 .tab.active {
-  background: #c8e6c9;
+  background: #e8f5e9;
+  border-bottom: 3px solid #2e7d32;
 }
 
 /* ===== CONTENT ===== */
 .tab-content {
-  flex: 1;
   display: none;
-  padding: 18px;
+  flex: 1;
+  padding: 20px;
   overflow-y: auto;
 }
 
@@ -75,103 +77,101 @@ body {
   display: block;
 }
 
-/* ===== CARBON ===== */
+/* ===== CARBON CALCULATOR ===== */
 label {
-  font-weight: bold;
   font-size: 14px;
+  font-weight: 600;
+  color: #333;
 }
 
-input {
+input[type="number"] {
   width: 100%;
+  margin: 8px 0 18px;
   padding: 12px;
-  margin: 6px 0 16px;
-  border-radius: 8px;
-  border: 1px solid #aaa;
-  font-size: 14px;
-  color: #000;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  background: #1b5e20;
-  color: white;
+  padding: 14px;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  color: #fff;
   border: none;
-  border-radius: 8px;
-  font-size: 15px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .result {
-  margin-top: 14px;
+  margin-top: 15px;
   padding: 14px;
-  border-radius: 10px;
-  background: #e8f5e9;
+  border-radius: 12px;
+  font-weight: bold;
+  text-align: center;
   display: none;
 }
 
 /* ===== CHATBOT ===== */
-.chat-wrapper {
-  height: 100%;
+.chat-box {
+  background: #f1f8e9;
+  padding: 15px;
+  height: calc(100% - 90px);
+  overflow-y: auto;
+  border-radius: 16px;
+  margin-bottom: 12px;
   display: flex;
   flex-direction: column;
 }
 
-.chat-box {
-  flex: 1;
-  background: #f1f8e9;
-  padding: 14px;
-  overflow-y: auto;
-  border-radius: 12px;
-}
-
 .message {
   max-width: 70%;
-  padding: 12px 14px;
   margin-bottom: 10px;
-  border-radius: 14px;
-  font-size: 15px;
-  color: #000;
+  padding: 14px 18px;
+  border-radius: 18px;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .user {
   background: #c8e6c9;
-  margin-left: auto;
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
 }
 
 .bot {
   background: #ffffff;
-  margin-right: auto;
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
 }
 
-/* ===== FIXED SEARCH BAR ===== */
+/* ===== BIG INPUT + SMALL SEND ===== */
 .chat-input {
   display: flex;
-  padding-top: 10px;
+  gap: 10px;
 }
 
 .chat-input input {
   flex: 1;
-  padding: 14px;
-  border-radius: 25px;
-  border: 1px solid #555;
-  font-size: 15px;
-  color: #000;               /* 🔥 TEXT VISIBLE */
-  background: #fff;          /* 🔥 CLEAR BACKGROUND */
-}
-
-.chat-input input::placeholder {
-  color: #777;
+  height: 55px;
+  padding: 0 20px;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 30px;
+  border: 2px solid #1b5e20;
 }
 
 .chat-input button {
-  margin-left: 10px;
-  padding: 14px 20px;
-  border-radius: 25px;
+  height: 45px;
+  padding: 0 18px;
   font-size: 14px;
+  border-radius: 22px;
   background: #1b5e20;
   color: white;
   border: none;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -181,45 +181,43 @@ button {
 <div class="container">
 
   <div class="header">
-    <h1>🌍 SDG 13 – Climate Action</h1>
-    <p>Carbon Calculator & AI Chatbot</p>
+    <h1>🌍 SDG 13 Climate AI & Carbon Calculator</h1>
+    <p>Carbon tracking & climate awareness assistant</p>
   </div>
 
   <div class="tabs">
-    <div class="tab active" data-tab="calc">Carbon Calculator</div>
-    <div class="tab" data-tab="chat">AI Chatbot</div>
+    <div class="tab active" data-tab="calculator">Carbon Calculator</div>
+    <div class="tab" data-tab="chatbot">AI Chatbot</div>
   </div>
 
-  <!-- ===== CARBON ===== -->
-  <div class="tab-content active" id="calc">
+  <!-- ===== CARBON CALCULATOR ===== -->
+  <div class="tab-content active" id="calculator">
     <label>Daily Transport Distance (km)</label>
     <input type="number" id="transport">
 
     <label>Monthly Electricity Usage (units)</label>
     <input type="number" id="electricity">
 
-    <label>Meat Meals per Week</label>
+    <label>Meat-based Meals per Week</label>
     <input type="number" id="meat">
 
     <button onclick="checkImpact()">Check Impact</button>
     <div class="result" id="calcResult"></div>
   </div>
 
-  <!-- ===== CHAT ===== -->
-  <div class="tab-content" id="chat">
-    <div class="chat-wrapper">
-      <div class="chat-box" id="chatBox"></div>
-      <div class="chat-input">
-        <input id="userInput" placeholder="Type your climate question..." />
-        <button onclick="send()">Send</button>
-      </div>
+  <!-- ===== CHATBOT ===== -->
+  <div class="tab-content" id="chatbot">
+    <div class="chat-box" id="chat"></div>
+    <div class="chat-input">
+      <input id="input" placeholder="Ask about climate action, SDG 13, carbon reduction..." />
+      <button onclick="send()">Send</button>
     </div>
   </div>
 
 </div>
 
 <script>
-// ===== TAB SWITCH =====
+// TAB SWITCH
 document.querySelectorAll(".tab").forEach(tab => {
   tab.onclick = () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -229,58 +227,47 @@ document.querySelectorAll(".tab").forEach(tab => {
   };
 });
 
-// ===== CARBON =====
+// CARBON CALCULATOR
 function checkImpact() {
-  const t = transport.value * 0.05;
-  const e = electricity.value * 0.02;
-  const m = meat.value * 0.6;
+  const t = Number(transport.value);
+  const e = Number(electricity.value);
+  const m = Number(meat.value);
   const total = t + e + m;
 
-  const level = total < 5 ? "Low 🌱" : total < 10 ? "Moderate ⚡" : "High 🔥";
+  let level = total <= 4 ? "Low 🌱" : total <= 8 ? "Moderate ⚡" : "High 🔥";
 
   calcResult.style.display = "block";
-  calcResult.innerHTML = `Carbon Score: ${total.toFixed(2)}<br>Impact Level: ${level}`;
+  calcResult.innerText = `Carbon Score: ${total}\nImpact Level: ${level}`;
 }
 
-// ===== CHAT =====
-const chatBox = document.getElementById("chatBox");
-const userInput = document.getElementById("userInput");
+// CHATBOT UI ONLY
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
 
-function addMsg(text, cls) {
-  const d = document.createElement("div");
-  d.className = "message " + cls;
-  d.innerText = text;
-  chatBox.appendChild(d);
-  chatBox.scrollTop = chatBox.scrollHeight;
+function addMessage(text, sender) {
+  const div = document.createElement("div");
+  div.className = `message ${sender}`;
+  div.textContent = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-addMsg("Hello 🌱 I am your Climate AI assistant.", "bot");
+addMessage("Hello 🌱 I'm your SDG 13 Climate Assistant!", "bot");
 
-async function send() {
-  const msg = userInput.value.trim();
-  if (!msg) return;
-
-  addMsg(msg, "user");
-  userInput.value = "";
-  addMsg("Thinking...", "bot");
-
-  try {
-    const res = await fetch("https://sdg13-backend.onrender.com/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: msg })
-    });
-    const data = await res.json();
-    chatBox.lastChild.remove();
-    addMsg(data.reply || "No response", "bot");
-  } catch {
-    chatBox.lastChild.remove();
-    addMsg("❌ Backend not reachable", "bot");
-  }
+function send() {
+  if (!input.value.trim()) return;
+  addMessage(input.value, "user");
+  input.value = "";
+  addMessage("🤖 AI backend not connected yet.", "bot");
 }
+
+input.addEventListener("keypress", e => {
+  if (e.key === "Enter") send();
+});
 </script>
 
 </body>
 </html>
+
 
 
