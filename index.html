@@ -158,7 +158,7 @@ async function send() {
   bot("Thinking... 🤖");
 
   try {
-    const res = await fetch("https://YOUR-BACKEND-URL/chat", {
+    const res = await fetch("https://sdg13-backend.onrender.com/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text })
