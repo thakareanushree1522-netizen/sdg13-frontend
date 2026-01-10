@@ -5,6 +5,7 @@
 <title>SDG 13 – Climate Action AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
 * {
@@ -15,20 +16,21 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg,#b7e4c7,#95d5b2);
+  background: linear-gradient(135deg,#c7f9cc,#80ed99);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* MAIN CARD */
+/* APP CONTAINER */
 .app {
-  width: 95%;
-  max-width: 1200px;
-  height: 92vh;
-  background: #ffffff;
-  border-radius: 22px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  width: 96%;
+  max-width: 1300px;
+  height: 94vh;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(14px);
+  border-radius: 26px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -36,20 +38,20 @@ body {
 
 /* HEADER */
 .header {
-  background: linear-gradient(135deg,#1b5e20,#2e7d32);
+  background: linear-gradient(135deg,#14532d,#1b5e20);
   color: #fff;
-  padding: 20px;
+  padding: 22px;
   text-align: center;
 }
 
 .header h1 {
   margin: 0;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 600;
 }
 
 .header p {
-  margin-top: 5px;
+  margin-top: 6px;
   font-size: 14px;
   opacity: 0.9;
 }
@@ -57,86 +59,106 @@ body {
 /* CHAT AREA */
 .chat-area {
   flex: 1;
-  padding: 25px;
-  background: #f4fff7;
+  padding: 30px;
+  background: linear-gradient(#f6fff8,#ecfdf5);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 }
 
-/* MESSAGE */
+/* CHAT BUBBLES */
 .msg {
   max-width: 65%;
-  padding: 14px 18px;
-  border-radius: 18px;
+  padding: 16px 20px;
   font-size: 16px;
-  line-height: 1.5;
-  animation: slideUp 0.3s ease;
+  line-height: 1.6;
+  border-radius: 20px;
+  position: relative;
+  animation: fadeUp 0.35s ease;
 }
 
-@keyframes slideUp {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .bot {
   background: #ffffff;
   align-self: flex-start;
-  border-left: 5px solid #2e7d32;
+  border-left: 6px solid #2e7d32;
 }
 
 .user {
-  background: #c8e6c9;
+  background: linear-gradient(135deg,#c7f9cc,#95d5b2);
   align-self: flex-end;
-  border-right: 5px solid #1b5e20;
+  border-right: 6px solid #1b5e20;
 }
 
 /* ERROR */
 .error {
   background: #ffe6e6;
-  border-left: 5px solid #d32f2f;
+  border-left: 6px solid #c62828;
   color: #b71c1c;
 }
 
 /* INPUT AREA */
 .input-area {
-  padding: 18px;
-  background: #ffffff;
+  padding: 20px;
+  background: rgba(255,255,255,0.95);
   display: flex;
-  gap: 14px;
-  border-top: 1px solid #ddd;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid rgba(0,0,0,0.08);
 }
 
+/* TEXT INPUT */
 .input-area input {
   flex: 1;
-  height: 58px;
-  padding: 0 22px;
-  font-size: 18px;
-  border-radius: 30px;
-  border: 2px solid #2e7d32;
+  height: 60px;
+  padding: 0 24px;
+  font-size: 19px;
+  border-radius: 40px;
+  border: none;
+  background: #f1f8f4;
+  box-shadow: inset 0 0 0 2px #2e7d32;
   outline: none;
 }
 
 .input-area input:focus {
-  box-shadow: 0 0 0 3px rgba(46,125,50,0.2);
+  box-shadow: inset 0 0 0 2px #1b5e20, 0 0 0 4px rgba(46,125,50,0.15);
 }
 
-/* SEND BUTTON */
-.input-area button {
-  width: 58px;
-  height: 58px;
+/* ICON BUTTONS */
+.icon-btn {
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: none;
   background: linear-gradient(135deg,#1b5e20,#2e7d32);
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
-  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.input-area button:hover {
-  transform: scale(1.05);
+.icon-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* MIC EFFECT */
+.mic:hover {
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(27,94,32,0.5); }
+  70% { box-shadow: 0 0 0 18px rgba(27,94,32,0); }
+  100% { box-shadow: 0 0 0 0 rgba(27,94,32,0); }
 }
 </style>
 </head>
@@ -155,8 +177,15 @@ body {
   </div>
 
   <div class="input-area">
-    <input id="input" placeholder="Ask about climate change, carbon footprint, SDG 13..." />
-    <button onclick="send()">➤</button>
+    <button class="icon-btn mic" title="Voice input">
+      <i class="fa-solid fa-microphone"></i>
+    </button>
+
+    <input id="input" placeholder="Ask about climate change, carbon footprint, SDG 13…" />
+
+    <button class="icon-btn" onclick="send()" title="Send">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
   </div>
 
 </div>
@@ -180,10 +209,10 @@ function send() {
   addMsg(text, "user");
   input.value = "";
 
-  // TEMP AI RESPONSE (backend placeholder)
+  // Backend placeholder
   setTimeout(() => {
-    addMsg("⚠ Gemini AI is currently not responding. Backend connection required.", "error");
-  }, 600);
+    addMsg("⚠ Gemini AI backend is not connected yet.", "error");
+  }, 700);
 }
 
 input.addEventListener("keydown", e => {
