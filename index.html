@@ -2,272 +2,194 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>🌍 SDG 13 Climate AI & Carbon Calculator</title>
+<title>SDG 13 – Climate Action AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #d4fc79, #96e6a1);
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg,#b7e4c7,#95d5b2);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
 }
 
-/* ===== BIG CONTAINER ===== */
-.container {
+/* MAIN CARD */
+.app {
   width: 95%;
-  max-width: 1100px;
-  height: 90vh;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  max-width: 1200px;
+  height: 92vh;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 .header {
-  background: linear-gradient(135deg, #2e7d32, #1b5e20);
-  color: white;
-  text-align: center;
-  padding: 18px;
-}
-
-.header h1 { font-size: 24px; }
-.header p { font-size: 14px; opacity: 0.9; }
-
-/* ===== TABS ===== */
-.tabs {
-  display: flex;
-  border-bottom: 1px solid #ddd;
-}
-
-.tab {
-  flex: 1;
-  text-align: center;
-  padding: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  background: #f1f8e9;
-}
-
-.tab.active {
-  background: #e8f5e9;
-  border-bottom: 3px solid #2e7d32;
-}
-
-/* ===== CONTENT ===== */
-.tab-content {
-  display: none;
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* ===== CARBON CALCULATOR ===== */
-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-}
-
-input[type="number"] {
-  width: 100%;
-  margin: 8px 0 18px;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  background: linear-gradient(135deg,#1b5e20,#2e7d32);
   color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.result {
-  margin-top: 15px;
-  padding: 14px;
-  border-radius: 12px;
-  font-weight: bold;
+  padding: 20px;
   text-align: center;
-  display: none;
 }
 
-/* ===== CHATBOT ===== */
-.chat-box {
-  background: #f1f8e9;
-  padding: 15px;
-  height: calc(100% - 90px);
+.header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.header p {
+  margin-top: 5px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* CHAT AREA */
+.chat-area {
+  flex: 1;
+  padding: 25px;
+  background: #f4fff7;
   overflow-y: auto;
-  border-radius: 16px;
-  margin-bottom: 12px;
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
-.message {
-  max-width: 70%;
-  margin-bottom: 10px;
+/* MESSAGE */
+.msg {
+  max-width: 65%;
   padding: 14px 18px;
   border-radius: 18px;
   font-size: 16px;
   line-height: 1.5;
+  animation: slideUp 0.3s ease;
 }
 
-.user {
-  background: #c8e6c9;
-  align-self: flex-end;
-  border-bottom-right-radius: 6px;
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .bot {
   background: #ffffff;
   align-self: flex-start;
-  border-bottom-left-radius: 6px;
+  border-left: 5px solid #2e7d32;
 }
 
-/* ===== BIG INPUT + SMALL SEND ===== */
-.chat-input {
+.user {
+  background: #c8e6c9;
+  align-self: flex-end;
+  border-right: 5px solid #1b5e20;
+}
+
+/* ERROR */
+.error {
+  background: #ffe6e6;
+  border-left: 5px solid #d32f2f;
+  color: #b71c1c;
+}
+
+/* INPUT AREA */
+.input-area {
+  padding: 18px;
+  background: #ffffff;
   display: flex;
-  gap: 10px;
+  gap: 14px;
+  border-top: 1px solid #ddd;
 }
 
-.chat-input input {
+.input-area input {
   flex: 1;
-  height: 55px;
-  padding: 0 20px;
+  height: 58px;
+  padding: 0 22px;
   font-size: 18px;
-  font-weight: 500;
   border-radius: 30px;
-  border: 2px solid #1b5e20;
+  border: 2px solid #2e7d32;
+  outline: none;
 }
 
-.chat-input button {
-  height: 45px;
-  padding: 0 18px;
-  font-size: 14px;
-  border-radius: 22px;
-  background: #1b5e20;
-  color: white;
+.input-area input:focus {
+  box-shadow: 0 0 0 3px rgba(46,125,50,0.2);
+}
+
+/* SEND BUTTON */
+.input-area button {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
   border: none;
+  background: linear-gradient(135deg,#1b5e20,#2e7d32);
+  color: #fff;
+  font-size: 20px;
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.input-area button:hover {
+  transform: scale(1.05);
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
   <div class="header">
-    <h1>🌍 SDG 13 Climate AI & Carbon Calculator</h1>
-    <p>Carbon tracking & climate awareness assistant</p>
+    <h1>🌍 SDG 13 – Climate Action</h1>
+    <p>Carbon Awareness & AI Climate Assistant</p>
   </div>
 
-  <div class="tabs">
-    <div class="tab active" data-tab="calculator">Carbon Calculator</div>
-    <div class="tab" data-tab="chatbot">AI Chatbot</div>
+  <div class="chat-area" id="chat">
+    <div class="msg bot">Hello 🌱 I am your Climate AI assistant.</div>
   </div>
 
-  <!-- ===== CARBON CALCULATOR ===== -->
-  <div class="tab-content active" id="calculator">
-    <label>Daily Transport Distance (km)</label>
-    <input type="number" id="transport">
-
-    <label>Monthly Electricity Usage (units)</label>
-    <input type="number" id="electricity">
-
-    <label>Meat-based Meals per Week</label>
-    <input type="number" id="meat">
-
-    <button onclick="checkImpact()">Check Impact</button>
-    <div class="result" id="calcResult"></div>
-  </div>
-
-  <!-- ===== CHATBOT ===== -->
-  <div class="tab-content" id="chatbot">
-    <div class="chat-box" id="chat"></div>
-    <div class="chat-input">
-      <input id="input" placeholder="Ask about climate action, SDG 13, carbon reduction..." />
-      <button onclick="send()">Send</button>
-    </div>
+  <div class="input-area">
+    <input id="input" placeholder="Ask about climate change, carbon footprint, SDG 13..." />
+    <button onclick="send()">➤</button>
   </div>
 
 </div>
 
 <script>
-// TAB SWITCH
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.onclick = () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-    tab.classList.add("active");
-    document.getElementById(tab.dataset.tab).classList.add("active");
-  };
-});
-
-// CARBON CALCULATOR
-function checkImpact() {
-  const t = Number(transport.value);
-  const e = Number(electricity.value);
-  const m = Number(meat.value);
-  const total = t + e + m;
-
-  let level = total <= 4 ? "Low 🌱" : total <= 8 ? "Moderate ⚡" : "High 🔥";
-
-  calcResult.style.display = "block";
-  calcResult.innerText = `Carbon Score: ${total}\nImpact Level: ${level}`;
-}
-
-// CHATBOT UI ONLY
 const chat = document.getElementById("chat");
 const input = document.getElementById("input");
 
-function addMessage(text, sender) {
+function addMsg(text, type) {
   const div = document.createElement("div");
-  div.className = `message ${sender}`;
+  div.className = `msg ${type}`;
   div.textContent = text;
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
 
-addMessage("Hello 🌱 I'm your SDG 13 Climate Assistant!", "bot");
-
 function send() {
-  if (!input.value.trim()) return;
-  addMessage(input.value, "user");
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMsg(text, "user");
   input.value = "";
-  addMessage("🤖 AI backend not connected yet.", "bot");
+
+  // TEMP AI RESPONSE (backend placeholder)
+  setTimeout(() => {
+    addMsg("⚠ Gemini AI is currently not responding. Backend connection required.", "error");
+  }, 600);
 }
 
-input.addEventListener("keypress", e => {
+input.addEventListener("keydown", e => {
   if (e.key === "Enter") send();
 });
 </script>
 
 </body>
 </html>
-
-
-
