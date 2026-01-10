@@ -133,30 +133,49 @@ button:hover {
 </div>
 
 <script>
-async function send() {
-  const input = document.getElementById("input");
-  const chat = document.getElementById("chat");
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
 
+function bot(msg) {
+  chat.innerHTML += `<div class="message bot">${msg}</div>`;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function user(msg) {
+  chat.innerHTML += `<div class="message user">${msg}</div>`;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+bot("Hello 🌱 I'm your SDG 13 Climate AI. Ask me anything!");
+
+async function send() {
   const text = input.value.trim();
   if (!text) return;
 
-  chat.innerHTML += `<div class="message user">${text}</div>`;
+  user(text);
   input.value = "";
 
-  chat.innerHTML += `<div class="message bot">Thinking... 🤖</div>`;
+  bot("Thinking... 🤖");
 
-  const response = await fetch("https://YOUR-BACKEND-URL/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: text })
-  });
+  try {
+    const res = await fetch("https://YOUR-BACKEND-URL/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
 
-  const data = await response.json();
+    const data = await res.json();
+    chat.lastChild.remove();
+    bot(data.reply);
 
-  document.querySelector(".bot:last-child").remove();
-  chat.innerHTML += `<div class="message bot">${data.reply}</div>`;
+  } catch (err) {
+    chat.lastChild.remove();
+    bot("❌ Unable to connect to AI");
+    console.error(err);
+  }
 }
 </script>
+
 
 
 </body>
