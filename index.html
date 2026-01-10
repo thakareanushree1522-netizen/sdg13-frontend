@@ -5,7 +5,6 @@
 <title>SDG 13 – Climate Action AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;font-family:'Inter',sans-serif}
@@ -27,7 +26,6 @@ body{
 }
 .sidebar h2{
   margin:0 0 30px;
-  font-size:20px;
 }
 .menu{
   display:flex;
@@ -44,8 +42,8 @@ body{
   cursor:pointer;
   font-size:15px;
 }
-.menu button:hover,
-.menu button.active{
+.menu button.active,
+.menu button:hover{
   background:#2e7d32;
 }
 
@@ -86,7 +84,7 @@ body{
 
 /* ===== INPUT BAR ===== */
 .input-bar{
-  padding:18px 24px;
+  padding:16px 24px;
   display:flex;
   gap:14px;
   border-top:1px solid #ddd;
@@ -94,14 +92,14 @@ body{
 .input-bar input{
   flex:1;
   height:58px;
-  padding:0 24px;
+  padding:0 22px;
   border-radius:30px;
   border:1px solid #ccc;
   font-size:18px;
 }
 .send{
-  width:52px;
-  height:52px;
+  width:48px;
+  height:48px;
   border-radius:50%;
   border:none;
   background:#2e7d32;
@@ -110,15 +108,14 @@ body{
   cursor:pointer;
 }
 
-/* ===== CHECK IMPACT ===== */
-.section{
-  display:none;
-  padding:40px;
-}
+/* ===== SECTIONS ===== */
+.section{display:none}
 .section.active{display:block}
 
+/* ===== IMPACT ===== */
 .calc{
   max-width:420px;
+  padding:40px;
 }
 .calc input{
   width:100%;
@@ -145,6 +142,9 @@ body{
 }
 
 /* ===== HISTORY ===== */
+.history{
+  padding:40px;
+}
 .history-item{
   background:#fff;
   padding:14px;
@@ -160,66 +160,59 @@ body{
 <div class="sidebar">
   <h2>🌍 SDG 13 AI</h2>
   <div class="menu">
-    <button class="active" onclick="openSection('chat')">💬 Chat</button>
-    <button onclick="openSection('impact')">🌱 Check Impact</button>
-    <button onclick="openSection('history')">📊 History</button>
+    <button class="active" onclick="openSection('chat',this)">💬 Chat</button>
+    <button onclick="openSection('impact',this)">🌱 Check Impact</button>
+    <button onclick="openSection('history',this)">📊 History</button>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
-  <!-- CHAT -->
-  <div id="chat" class="section active">
-    <div class="chat" id="chatBox">
-      <div class="msg bot">Hello 🌱 I am your Climate AI assistant.</div>
-    </div>
-    <div class="input-bar">
-      <input id="msgInput" placeholder="Ask about climate change, SDG 13, carbon footprint..." />
-      <button class="send" onclick="sendMsg()">➤</button>
-    </div>
+<!-- CHAT -->
+<div id="chat" class="section active">
+  <div class="chat" id="chatBox">
+    <div class="msg bot">Hello 🌱 I am your Climate AI assistant.</div>
   </div>
+  <div class="input-bar">
+    <input id="msgInput" placeholder="Ask about climate change, SDG 13, carbon footprint..." />
+    <button class="send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
 
-  <!-- CHECK IMPACT -->
-  <div id="impact" class="section">
+<!-- IMPACT -->
+<div id="impact" class="section">
+  <div class="calc">
     <h2>🌱 Carbon Footprint Calculator</h2>
-    <div class="calc">
-      <input type="number" id="t" placeholder="Daily transport (km)">
-      <input type="number" id="e" placeholder="Electricity units / month">
-      <input type="number" id="m" placeholder="Meat meals / week">
-      <button onclick="checkImpact()">Check Impact</button>
-      <div class="result" id="impactRes"></div>
-    </div>
+    <input type="number" id="t" placeholder="Daily transport (km)">
+    <input type="number" id="e" placeholder="Electricity units / month">
+    <input type="number" id="m" placeholder="Meat meals / week">
+    <button onclick="checkImpact()">Check Impact</button>
+    <div class="result" id="impactRes"></div>
   </div>
+</div>
 
-  <!-- HISTORY -->
-  <div id="history" class="section">
-    <h2>📊 Impact History</h2>
-    <div id="historyList"></div>
-  </div>
+<!-- HISTORY -->
+<div id="history" class="section history">
+  <h2>📊 Impact History</h2>
+  <div id="historyList"></div>
+</div>
 
 </div>
 
 <script>
-const sections=document.querySelectorAll('.section');
-const buttons=document.querySelectorAll('.menu button');
+const API_URL = "https://YOUR-BACKEND-NAME.onrender.com/chat";
 
-function openSection(id){
-  sections.forEach(s=>s.classList.remove('active'));
-  buttons.forEach(b=>b.classList.remove('active'));
+/* NAVIGATION */
+function openSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
 }
 
 /* CHAT */
 const chatBox=document.getElementById('chatBox');
-function sendMsg(){
-  const input=document.getElementById('msgInput');
-  if(!input.value.trim())return;
-  addMsg(input.value,'user');
-  input.value='';
-  setTimeout(()=>addMsg("⚠ Backend not connected. AI response will appear once API is live.","error"),600);
-}
 function addMsg(text,type){
   const d=document.createElement('div');
   d.className=`msg ${type}`;
@@ -228,24 +221,44 @@ function addMsg(text,type){
   chatBox.scrollTop=chatBox.scrollHeight;
 }
 
+function sendMsg(){
+  const input=document.getElementById('msgInput');
+  const text=input.value.trim();
+  if(!text) return;
+
+  addMsg(text,'user');
+  input.value='';
+
+  fetch(API_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message:text})
+  })
+  .then(res=>res.json())
+  .then(data=>addMsg(data.reply,'bot'))
+  .catch(()=>addMsg("❌ Unable to connect to AI server","error"));
+}
+
 /* IMPACT */
-const history=[];
+const historyData=[];
 function checkImpact(){
   const score=(+t.value||0)+(+e.value||0)/30+(+m.value||0)*0.5;
   let level,color;
   if(score<10){level="Low 🌱";color="#c8e6c9";}
   else if(score<20){level="Moderate ⚡";color="#fff3cd";}
   else{level="High 🔥";color="#fdecea";}
+
   impactRes.style.display="block";
   impactRes.style.background=color;
   impactRes.innerText=`Score: ${score.toFixed(1)} | Impact: ${level}`;
-  history.push(`Score ${score.toFixed(1)} – ${level}`);
+
+  historyData.push(`Score ${score.toFixed(1)} – ${level}`);
   renderHistory();
 }
 
 function renderHistory(){
   historyList.innerHTML='';
-  history.forEach(h=>{
+  historyData.forEach(h=>{
     const d=document.createElement('div');
     d.className='history-item';
     d.textContent=h;
@@ -256,3 +269,4 @@ function renderHistory(){
 
 </body>
 </html>
+
