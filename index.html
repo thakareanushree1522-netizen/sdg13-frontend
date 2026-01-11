@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
@@ -24,14 +23,10 @@ body{display:flex;height:100vh;background:#f5f7f6}
   font-size:20px;
 }
 .menu-btn{
-  display:flex;
-  align-items:center;
-  gap:10px;
   padding:12px;
   margin-bottom:10px;
   border-radius:10px;
   cursor:pointer;
-  transition:0.2s;
 }
 .menu-btn:hover,
 .menu-btn.active{
@@ -62,7 +57,6 @@ body{display:flex;height:100vh;background:#f5f7f6}
   padding:12px 15px;
   border-radius:15px;
   margin-bottom:10px;
-  line-height:1.4;
 }
 .bot{background:#e8f5e9;border-left:4px solid #2e7d32;}
 .user{background:#c8e6c9;margin-left:auto;text-align:right;}
@@ -77,7 +71,6 @@ body{display:flex;height:100vh;background:#f5f7f6}
   padding:14px;
   border-radius:30px;
   border:1px solid #ccc;
-  font-size:15px;
 }
 .chat-input button{
   width:50px;
@@ -90,7 +83,7 @@ body{display:flex;height:100vh;background:#f5f7f6}
   cursor:pointer;
 }
 
-/* ===== CALCULATOR ===== */
+/* ===== CARD ===== */
 .card{
   background:#fff;
   padding:25px;
@@ -115,10 +108,12 @@ body{display:flex;height:100vh;background:#f5f7f6}
   font-size:16px;
   cursor:pointer;
 }
+
 .result{
   margin-top:15px;
-  font-weight:bold;
-  color:#1b5e20;
+  font-weight:600;
+  padding:12px;
+  border-radius:10px;
 }
 
 /* ===== HISTORY ===== */
@@ -137,100 +132,91 @@ body{display:flex;height:100vh;background:#f5f7f6}
 <!-- SIDEBAR -->
 <div class="sidebar">
   <h2>🌍 SDG 13 AI</h2>
+  <div class="menu-btn active" onclick="showSection('chat',this)">💬 Chat</div>
+  <div class="menu-btn" onclick="showSection('impact',this)">🌱 Check Impact</div>
+  <div class="menu-btn" onclick="showSection('history',this)">📜 History</div>
+</div>
 
-  <div class="menu-btn active" onclick="showSection('chat')">
-    💬 Chat
+<!-- MAIN -->
+<div class="main">
+
+<!-- CHAT -->
+<div id="chat" class="section active">
+  <div class="chat-box" id="chatBox">
+    <div class="msg bot">Hello 🌱 I am your Climate AI assistant.</div>
   </div>
 
-  <div class="menu-btn" onclick="showSection('impact')">
-    🌱 Check Impact
-  </div>
-
-  <div class="menu-btn" onclick="showSection('history')">
-    📜 History
+  <div class="chat-input">
+    <input id="userInput" placeholder="Type your message...">
+    <button onclick="sendMessage()">➤</button>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
-<div class="main">
+<!-- IMPACT -->
+<div id="impact" class="section">
+  <div class="card">
+    <h3>🌱 Carbon Footprint Checker</h3><br>
 
-  <!-- CHAT -->
-  <div id="chat" class="section active">
-    <div class="chat-box" id="chatBox">
-      <div class="msg bot">Hello 🌱 I am your Climate AI assistant.</div>
-    </div>
+    <input type="number" id="transport" placeholder="Transport km/day">
+    <input type="number" id="electricity" placeholder="Electricity units/month">
+    <input type="number" id="meat" placeholder="Meat meals/week">
 
-    <div class="chat-input">
-      <input id="userInput" placeholder="Type your message...">
-      <button onclick="sendMessage()">➤</button>
-    </div>
+    <button onclick="calculateImpact()">Check Impact</button>
+    <div class="result" id="impactResult"></div>
   </div>
+</div>
 
-  <!-- IMPACT -->
-  <div id="impact" class="section">
-    <div class="card">
-      <h3>🌱 Carbon Footprint Checker</h3><br>
-
-      <input type="number" id="transport" placeholder="Transport km/day">
-      <input type="number" id="electricity" placeholder="Electricity units/month">
-      <input type="number" id="meat" placeholder="Meat meals/week">
-
-      <button onclick="calculateImpact()">Check Impact</button>
-      <div class="result" id="impactResult"></div>
-    </div>
-  </div>
-
-  <!-- HISTORY -->
-  <div id="history" class="section">
-    <h3>📜 Chat History</h3><br>
-    <div id="historyList"></div>
-  </div>
+<!-- HISTORY -->
+<div id="history" class="section">
+  <h3>📜 History</h3><br>
+  <div id="historyList"></div>
+</div>
 
 </div>
 
 <script>
 /* ===== NAVIGATION ===== */
-function showSection(id){
+function showSection(id,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
 }
 
 /* ===== CHAT ===== */
-const chatBox = document.getElementById("chatBox");
-const historyList = document.getElementById("historyList");
-let history = [];
+const chatBox=document.getElementById("chatBox");
+const historyList=document.getElementById("historyList");
+let history=[];
 
-function addMessage(text, sender){
-  const div = document.createElement("div");
-  div.className = "msg " + sender;
-  div.textContent = text;
+function addMessage(text,type){
+  const div=document.createElement("div");
+  div.className="msg "+type;
+  div.textContent=text;
   chatBox.appendChild(div);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  chatBox.scrollTop=chatBox.scrollHeight;
 }
 
 async function sendMessage(){
-  const input = document.getElementById("userInput");
-  const text = input.value.trim();
+  const input=document.getElementById("userInput");
+  const text=input.value.trim();
   if(!text) return;
 
   addMessage(text,"user");
-  history.push("You: " + text);
+  history.push("You: "+text);
   input.value="";
 
   addMessage("Thinking... 🤖","bot");
 
   try{
-    const res = await fetch("https://sdg13-backend.onrender.com/chat",{
+    const res=await fetch("https://sdg13-backend.onrender.com/chat",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({message:text})
     });
-    const data = await res.json();
+    const data=await res.json();
     chatBox.lastChild.remove();
     addMessage(data.reply,"bot");
-    history.push("AI: " + data.reply);
+    history.push("AI: "+data.reply);
     updateHistory();
   }catch{
     chatBox.lastChild.remove();
@@ -238,20 +224,31 @@ async function sendMessage(){
   }
 }
 
-/* ===== IMPACT ===== */
+/* ===== IMPACT LOGIC ===== */
 function calculateImpact(){
-  const t = +transport.value;
-  const e = +electricity.value;
-  const m = +meat.value;
-  const score = t + (e/30) + (m*0.5);
-  impactResult.textContent = "Your Carbon Score: " + score.toFixed(1);
+  const t=Number(transport.value)||0;
+  const e=Number(electricity.value)||0;
+  const m=Number(meat.value)||0;
+
+  const score=(t*0.4)+(e*0.05)+(m*1.5);
+
+  let level="",color="";
+  if(score<15){level="Low 🌱";color="#c8e6c9";}
+  else if(score<30){level="Moderate ⚡";color="#fff3cd";}
+  else{level="High 🔥";color="#fdecea";}
+
+  impactResult.style.background=color;
+  impactResult.innerHTML=`🌍 Score: <b>${score.toFixed(1)}</b><br>Impact: <b>${level}</b>`;
+
+  history.push(`Impact Check → ${score.toFixed(1)} (${level})`);
+  updateHistory();
 }
 
 /* ===== HISTORY ===== */
 function updateHistory(){
   historyList.innerHTML="";
   history.forEach(h=>{
-    const div = document.createElement("div");
+    const div=document.createElement("div");
     div.className="history-item";
     div.textContent=h;
     historyList.appendChild(div);
