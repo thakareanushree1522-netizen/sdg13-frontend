@@ -20,7 +20,7 @@ body{
   min-height:100vh;
 }
 
-/* ===== TOP NAV ===== */
+/* ===== NAVBAR ===== */
 .navbar{
   height:70px;
   background:#ffffff;
@@ -54,12 +54,9 @@ body{
 }
 
 /* ===== CONTENT ===== */
-.content{
-  padding:35px;
-}
-
-.section{display:none;}
-.section.active{display:block;}
+.content{ padding:35px; }
+.section{ display:none; }
+.section.active{ display:block; }
 
 /* ===== CHAT ===== */
 .chat-layout{
@@ -136,14 +133,8 @@ body{
   box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
 
-.info-card h2{
-  margin-bottom:15px;
-}
-
-.info-card p{
-  line-height:1.6;
-  font-size:15px;
-}
+.info-card h2{ margin-bottom:15px; }
+.info-card p{ line-height:1.6; font-size:15px; }
 
 /* ===== IMPACT ===== */
 .impact-container{
@@ -215,21 +206,24 @@ body{
   <div class="chat-layout">
     <div class="chat-box">
       <div class="chat-messages" id="chatBox">
-        <div class="msg bot">Hello 🌱 I am your AI Climate Assistant.</div>
+        <div class="msg bot">
+          Hello 🌱 I’m your AI Climate Assistant. Ask me anything about climate change, carbon, or SDG 13.
+        </div>
       </div>
       <div class="chat-input">
-        <input id="userInput" placeholder="Ask about climate change, SDG 13..." />
+        <input id="userInput" placeholder="Ask a climate question..." />
         <button onclick="sendMessage()">➤</button>
+        <button onclick="newChat()" title="New Chat">🆕</button>
       </div>
     </div>
 
     <div class="info-card">
       <h2>Why Climate AI?</h2>
       <p>
-        This AI assistant helps users understand climate impact,
-        calculate carbon footprint, and receive sustainability guidance.
+        This AI assistant helps users understand climate change,
+        carbon footprint, sustainability practices, and SDG 13 impact.
         <br><br>
-        Built for SDG 13 – Climate Action using AI & real-time analysis.
+        Built for AICTE Internship & CSRBOX Capstone using AI.
       </p>
     </div>
   </div>
@@ -267,6 +261,34 @@ const chatBox=document.getElementById("chatBox");
 const historyList=document.getElementById("historyList");
 let history=[];
 
+/* ===== LOCAL CLIMATE INTELLIGENCE ===== */
+function localClimateReply(msg){
+  msg = msg.toLowerCase();
+
+  if(["hi","hii","hello","hey"].includes(msg))
+    return "Hello 🌱 I’m your Climate AI Assistant. Ask me anything related to climate change or sustainability.";
+
+  if(msg.includes("carbon"))
+    return "Carbon is a natural element. In climate science, it usually refers to CO₂, a greenhouse gas that traps heat in the atmosphere.";
+
+  if(msg.includes("co2"))
+    return "CO₂ (carbon dioxide) is released by vehicles, factories, electricity generation, and deforestation.";
+
+  if(msg.includes("climate change"))
+    return "Climate change means long-term changes in temperature and weather patterns, mainly caused by human activities.";
+
+  if(msg.includes("global warming"))
+    return "Global warming is the rise in Earth’s average temperature due to excess greenhouse gases.";
+
+  if(msg.includes("sustainability"))
+    return "Sustainability means using resources responsibly so future generations can meet their needs.";
+
+  if(msg.includes("sdg"))
+    return "SDG 13 focuses on urgent action to combat climate change and its impacts.";
+
+  return null;
+}
+
 function addMessage(text,type){
   const div=document.createElement("div");
   div.className="msg "+type;
@@ -286,6 +308,15 @@ async function sendMessage(){
 
   addMessage("Thinking... 🤖","bot");
 
+  const local = localClimateReply(text);
+  if(local){
+    chatBox.lastChild.remove();
+    addMessage(local,"bot");
+    history.push("AI: "+local);
+    updateHistory();
+    return;
+  }
+
   try{
     const res=await fetch("https://sdg13-backend.onrender.com/chat",{
       method:"POST",
@@ -294,13 +325,20 @@ async function sendMessage(){
     });
     const data=await res.json();
     chatBox.lastChild.remove();
-    addMessage(data.reply,"bot");
+    addMessage(data.reply || "Climate action helps protect our planet 🌍.","bot");
     history.push("AI: "+data.reply);
     updateHistory();
   }catch{
     chatBox.lastChild.remove();
     addMessage("❌ Backend not responding","bot");
   }
+}
+
+function newChat(){
+  chatBox.innerHTML = `
+    <div class="msg bot">
+      Hello 🌱 I’m your AI Climate Assistant. How can I help today?
+    </div>`;
 }
 
 function calculateImpact(){
@@ -334,6 +372,7 @@ function updateHistory(){
 
 </body>
 </html>
+
 
 
 
