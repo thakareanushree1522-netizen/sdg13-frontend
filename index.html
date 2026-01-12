@@ -1,8 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SDG 13 – Climate AI Assistant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  background:#f3f6f4;
+  min-height:100vh;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  height:70px;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+}
+
+.logo{
+  font-size:22px;
+  font-weight:600;
+  color:#1b5e20;
+}
+
+.nav-btns button{
+  margin-left:10px;
+  padding:10px 18px;
+  border:none;
+  border-radius:25px;
+  background:#e8f5e9;
+  color:#1b5e20;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.nav-btns button.active{
+  background:#2e7d32;
+  color:#fff;
+}
+
+/* ===== CONTENT ===== */
+.content{ padding:35px; }
+.section{ display:none; }
+.section.active{ display:block; }
+
+/* ===== CHAT ===== */
+.chat-layout{
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:25px;
+}
+
+.chat-box{
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  height:70vh;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.chat-messages{
+  flex:1;
+  overflow-y:auto;
+}
+
+.msg{
+  max-width:75%;
+  padding:14px 18px;
+  border-radius:18px;
+  margin-bottom:12px;
+  font-size:15px;
+  line-height:1.5;
+}
+
+.bot{
+  background:#e8f5e9;
+  border-left:4px solid #2e7d32;
+}
+
+.user{
+  background:#c8e6c9;
+  margin-left:auto;
+  text-align:right;
+}
+
+.chat-input{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.chat-input input{
+  flex:1;
+  padding:14px 20px;
+  border-radius:30px;
+  border:1px solid #ccc;
+}
+
+.chat-input button{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:none;
+  background:#2e7d32;
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* ===== INFO CARD ===== */
+.info-card{
+  background:linear-gradient(180deg,#1b5e20,#2e7d32);
+  color:#fff;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.info-card h2{ margin-bottom:15px; }
+.info-card p{ line-height:1.6; font-size:15px; }
+
+/* ===== IMPACT ===== */
+.impact-container{
+  max-width:520px;
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.impact-container h2{
+  color:#1b5e20;
+  margin-bottom:15px;
+}
+
+.impact-container input{
+  width:100%;
+  padding:14px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+.impact-container button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:#2e7d32;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:15px;
+  padding:15px;
+  border-radius:10px;
+  font-weight:600;
+}
+
+/* ===== HISTORY ===== */
+.history-card{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  margin-bottom:12px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">🌍 Climate AI Assistant</div>
+  <div class="nav-btns">
+    <button class="active" onclick="showSection('chat',this)">Chat</button>
+    <button onclick="showSection('impact',this)">Impact</button>
+    <button onclick="showSection('history',this)">History</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- CHAT -->
+<div id="chat" class="section active">
+  <div class="chat-layout">
+    <div class="chat-box">
+      <div class="chat-messages" id="chatBox">
+        <div class="msg bot">
+          Hello 🌱 I’m your AI Climate Assistant. Ask me anything about climate change, carbon, or SDG 13.
+        </div>
+      </div>
+      <div class="chat-input">
+        <input id="userInput" placeholder="Ask a climate question..." />
+        <button onclick="sendMessage()">➤</button>
+        <button onclick="newChat()" title="New Chat">🆕</button>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h2>Why Climate AI?</h2>
+      <p>
+        This AI assistant helps users understand climate change,
+        carbon footprint, sustainability practices, and SDG 13 impact.
+        <br><br>
+        Built for AICTE Internship & CSRBOX Capstone using AI.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- IMPACT -->
+<div id="impact" class="section">
+  <div class="impact-container">
+    <h2>🌱 Carbon Footprint Calculator</h2>
+    <input id="transport" type="number" placeholder="Transport km/day">
+    <input id="electricity" type="number" placeholder="Electricity units/month">
+    <input id="meat" type="number" placeholder="Meat meals/week">
+    <button onclick="calculateImpact()">Analyze Impact</button>
+    <div class="result" id="impactResult"></div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="history" class="section">
+  <h2>📜 User Activity History</h2><br>
+  <div id="historyList"></div>
+</div>
+
+</div>
+
+<script>
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btns button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const chatBox=document.getElementById("chatBox");
+const historyList=document.getElementById("historyList");
+let history=[];
+
+/* ===== LOCAL CLIMATE INTELLIGENCE ===== */
 function localClimateReply(msg){
   msg = msg.toLowerCase();
 
   if(["hi","hii","hello","hey"].includes(msg))
-    return "Hello 🌱 I’m your Climate AI Assistant. Ask me anything related to climate change, carbon, or sustainability.";
+    return "Hello 🌱 I’m your Climate AI Assistant. Ask me anything related to climate change or sustainability.";
 
   if(msg.includes("carbon"))
     return "Carbon is a natural element. In climate science, it usually refers to CO₂, a greenhouse gas that traps heat in the atmosphere.";
@@ -22,35 +286,93 @@ function localClimateReply(msg){
   if(msg.includes("sdg"))
     return "SDG 13 focuses on urgent action to combat climate change and its impacts.";
 
-  if(msg.includes("renewable"))
-    return "Renewable energy comes from sources like the sun, wind, and water, which do not run out and produce less pollution.";
-
-  if(msg.includes("pollution"))
-    return "Pollution is the introduction of harmful substances into the environment, causing health and climate issues.";
-
-  if(msg.includes("deforestation"))
-    return "Deforestation is the clearing of forests, which reduces carbon absorption and harms biodiversity.";
-
-  if(msg.includes("greenhouse gases"))
-    return "Greenhouse gases like CO₂, methane, and nitrous oxide trap heat in the atmosphere, causing global warming.";
-
-  if(msg.includes("ocean"))
-    return "Oceans absorb carbon dioxide and heat, but climate change causes ocean warming and acidification, impacting marine life.";
-
-  if(msg.includes("recycling"))
-    return "Recycling reduces waste, saves energy, and helps reduce greenhouse gas emissions.";
-
-  if(msg.includes("emission"))
-    return "Emissions refer to the release of greenhouse gases into the atmosphere from human activities.";
-
-  if(msg.includes("energy"))
-    return "Energy efficiency and renewable energy are key to reducing carbon footprint and combating climate change.";
-
-  if(msg.includes("climate action"))
-    return "Climate action involves reducing emissions, using renewable energy, conserving resources, and promoting sustainability.";
-
-  return null; // fallback if no keyword matched
+  return null;
 }
+
+function addMessage(text,type){
+  const div=document.createElement("div");
+  div.className="msg "+type;
+  div.textContent=text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+async function sendMessage(){
+  const input=document.getElementById("userInput");
+  const text=input.value.trim();
+  if(!text) return;
+
+  addMessage(text,"user");
+  history.push("You: "+text);
+  input.value="";
+
+  addMessage("Thinking... 🤖","bot");
+
+  const local = localClimateReply(text);
+  if(local){
+    chatBox.lastChild.remove();
+    addMessage(local,"bot");
+    history.push("AI: "+local);
+    updateHistory();
+    return;
+  }
+
+  try{
+    const res=await fetch("https://sdg13-backend.onrender.com/chat",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({message:text})
+    });
+    const data=await res.json();
+    chatBox.lastChild.remove();
+    addMessage(data.reply || "Climate action helps protect our planet 🌍.","bot");
+    history.push("AI: "+data.reply);
+    updateHistory();
+  }catch{
+    chatBox.lastChild.remove();
+    addMessage("❌ Backend not responding","bot");
+  }
+}
+
+function newChat(){
+  chatBox.innerHTML = `
+    <div class="msg bot">
+      Hello 🌱 I’m your AI Climate Assistant. How can I help today?
+    </div>`;
+}
+
+function calculateImpact(){
+  const t=Number(transport.value)||0;
+  const e=Number(electricity.value)||0;
+  const m=Number(meat.value)||0;
+
+  const score=(t*0.4)+(e*0.05)+(m*1.5);
+  let level="",color="";
+
+  if(score<15){level="Low 🌱";color="#c8e6c9";}
+  else if(score<30){level="Moderate ⚡";color="#fff3cd";}
+  else{level="High 🔥";color="#fdecea";}
+
+  impactResult.style.background=color;
+  impactResult.innerHTML=`🌍 Score: <b>${score.toFixed(1)}</b><br>Impact: <b>${level}</b>`;
+  history.push(`Impact → ${score.toFixed(1)} (${level})`);
+  updateHistory();
+}
+
+function updateHistory(){
+  historyList.innerHTML="";
+  history.forEach(h=>{
+    const div=document.createElement("div");
+    div.className="history-card";
+    div.textContent=h;
+    historyList.appendChild(div);
+  });
+}
+</script>
+
+</body>
+</html>
+
 
 
 
