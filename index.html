@@ -28,7 +28,7 @@ body{
 /* ===== WRAPPER ===== */
 .wrapper{
   width:100%;
-  max-width:900px;
+  max-width:850px;
   background:#ffffffcc;
   backdrop-filter:blur(12px);
   border-radius:28px;
@@ -58,7 +58,7 @@ body{
   background:#fdf7ff;
   border-radius:22px;
   padding:20px;
-  height:320px;
+  height:340px;
   overflow-y:auto;
 }
 
@@ -106,53 +106,15 @@ body{
   cursor:pointer;
 }
 
-/* ===== CARDS ===== */
-.cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+/* ===== HISTORY ===== */
+.history-section{
   margin-top:30px;
 }
 
-.card{
-  background:#fdf5ff;
-  border-radius:22px;
-  padding:20px;
-}
-
-.card h3{
+.history-section h3{
   margin-bottom:10px;
 }
 
-.card input{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:12px;
-  border:1px solid #e0c9f2;
-}
-
-.card button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:none;
-  border-radius:14px;
-  background:#b76be4;
-  color:#fff;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.result{
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
-  background:#ffe4f3;
-  font-weight:600;
-}
-
-/* ===== HISTORY ===== */
 .history-item{
   background:#efe2ff;
   padding:10px;
@@ -169,7 +131,7 @@ body{
 
   <!-- TITLE -->
   <div class="title">
-    <h1>🌸 SoftClimate AI</h1>
+    <h1>SoftClimate AI</h1>
     <p>AI-Powered Climate Action Assistant for Carbon Awareness & Sustainability</p>
   </div>
 
@@ -179,29 +141,14 @@ body{
   </div>
 
   <div class="input-area">
-    <input id="userInput" placeholder="Ask about climate action, carbon footprint..." />
+    <input id="userInput" placeholder="Ask about climate action, sustainability, SDG 13..." />
     <button onclick="sendMessage()">➤</button>
   </div>
 
-  <!-- CARDS -->
-  <div class="cards">
-
-    <!-- IMPACT -->
-    <div class="card">
-      <h3>🌿 Carbon Footprint Check</h3>
-      <input id="transport" type="number" placeholder="Transport km/day">
-      <input id="electricity" type="number" placeholder="Electricity units/month">
-      <input id="meat" type="number" placeholder="Meat meals/week">
-      <button onclick="calculateImpact()">Check Impact</button>
-      <div class="result" id="impactResult"></div>
-    </div>
-
-    <!-- HISTORY -->
-    <div class="card">
-      <h3>📜 Interaction History</h3>
-      <div id="historyList"></div>
-    </div>
-
+  <!-- HISTORY -->
+  <div class="history-section">
+    <h3>📜 Interaction History</h3>
+    <div id="historyList"></div>
   </div>
 
 </div>
@@ -247,23 +194,6 @@ async function sendMessage(){
   }
 }
 
-function calculateImpact(){
-  const t=Number(transport.value)||0;
-  const e=Number(electricity.value)||0;
-  const m=Number(meat.value)||0;
-
-  const score=(t*0.4)+(e*0.05)+(m*1.5);
-  let level="";
-
-  if(score<15) level="Low 🌱";
-  else if(score<30) level="Moderate ⚡";
-  else level="High 🔥";
-
-  impactResult.innerHTML=`🌍 Score: ${score.toFixed(1)}<br>Impact: ${level}`;
-  history.push(`Impact Check → ${score.toFixed(1)} (${level})`);
-  updateHistory();
-}
-
 function updateHistory(){
   historyList.innerHTML="";
   history.forEach(h=>{
@@ -277,6 +207,7 @@ function updateHistory(){
 
 </body>
 </html>
+
 
 
 
