@@ -2,211 +2,234 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SoftClimate AI</title>
+<title>EcoTrack AI Chat Assistant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:'Inter',sans-serif;
+  font-family:'Poppins', sans-serif;
 }
 
 body{
-  min-height:100vh;
-  background:linear-gradient(180deg,#f7e8ff,#ffe4f3);
+  height:100vh;
   display:flex;
-  align-items:center;
   justify-content:center;
-  padding:40px;
-  color:#3a235c;
+  align-items:center;
+  background:linear-gradient(135deg,#f7d6ff,#fde2e4);
 }
 
-/* ===== WRAPPER ===== */
-.wrapper{
-  width:100%;
-  max-width:850px;
-  background:#ffffffcc;
-  backdrop-filter:blur(12px);
-  border-radius:28px;
-  padding:30px;
-  box-shadow:0 25px 50px rgba(120,60,160,0.15);
+/* ===== CHAT CONTAINER ===== */
+.chat-container{
+  width:380px;
+  height:620px;
+  background:#ffffff;
+  border-radius:22px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
 }
 
-/* ===== TITLE ===== */
-.title{
+/* ===== HEADER ===== */
+.chat-header{
+  padding:18px;
   text-align:center;
-  margin-bottom:30px;
+  background:linear-gradient(135deg,#b983ff,#ff9ecd);
+  color:white;
 }
 
-.title h1{
-  font-size:34px;
+.chat-header h2{
   font-weight:600;
 }
 
-.title p{
-  margin-top:8px;
-  font-size:16px;
-  opacity:0.8;
+.chat-header p{
+  font-size:13px;
+  opacity:0.9;
 }
 
-/* ===== CHAT ===== */
-.chat-area{
-  background:#fdf7ff;
-  border-radius:22px;
-  padding:20px;
-  height:340px;
+/* ===== CHAT BOX ===== */
+.chat-box{
+  flex:1;
+  padding:15px;
   overflow-y:auto;
+  background:#fff7fb;
 }
 
 .msg{
-  max-width:75%;
-  padding:12px 16px;
+  max-width:80%;
+  padding:10px 14px;
+  margin-bottom:12px;
   border-radius:16px;
-  margin-bottom:10px;
-  font-size:15px;
+  font-size:14px;
+  line-height:1.4;
 }
 
 .bot{
-  background:#efe2ff;
+  background:#f0d9ff;
+  color:#4a2c6b;
+  border-top-left-radius:0;
 }
 
 .user{
-  background:#ffd6eb;
+  background:#ffb3d9;
+  color:#5a0c3c;
   margin-left:auto;
-  text-align:right;
+  border-top-right-radius:0;
 }
 
-/* ===== INPUT ===== */
+/* ===== INPUT AREA ===== */
 .input-area{
   display:flex;
-  gap:10px;
-  margin-top:15px;
+  padding:12px;
+  border-top:1px solid #eee;
+  background:#fff;
 }
 
 .input-area input{
   flex:1;
-  padding:14px;
-  border-radius:30px;
-  border:1px solid #e0c9f2;
-  font-size:15px;
+  padding:10px 14px;
+  border-radius:20px;
+  border:1px solid #ddd;
+  outline:none;
 }
 
 .input-area button{
-  width:50px;
-  height:50px;
-  border-radius:50%;
+  margin-left:8px;
+  padding:10px 18px;
   border:none;
-  background:#d16ba5;
-  color:#fff;
-  font-size:18px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#b983ff,#ff9ecd);
+  color:white;
   cursor:pointer;
+  font-weight:500;
 }
 
-/* ===== HISTORY ===== */
-.history-section{
-  margin-top:30px;
+.input-area button:hover{
+  opacity:0.9;
 }
 
-.history-section h3{
-  margin-bottom:10px;
+/* ===== SCROLLBAR ===== */
+.chat-box::-webkit-scrollbar{
+  width:5px;
 }
-
-.history-item{
-  background:#efe2ff;
-  padding:10px;
-  border-radius:12px;
-  margin-top:8px;
-  font-size:14px;
+.chat-box::-webkit-scrollbar-thumb{
+  background:#d6b3ff;
+  border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<div class="chat-container">
 
-  <!-- TITLE -->
-  <div class="title">
-    <h1>SoftClimate AI</h1>
-    <p>AI-Powered Climate Action Assistant for Carbon Awareness & Sustainability</p>
+  <div class="chat-header">
+    <h2>EcoTrack AI 🌍</h2>
+    <p>Your Climate Action Assistant</p>
   </div>
 
-  <!-- CHAT -->
-  <div class="chat-area" id="chatBox">
-    <div class="msg bot">Hello 🌱 I’m SoftClimate AI. Ask me about sustainability.</div>
-  </div>
+  <div class="chat-box" id="chatBox"></div>
 
   <div class="input-area">
-    <input id="userInput" placeholder="Ask about climate action, sustainability, SDG 13..." />
-    <button onclick="sendMessage()">➤</button>
-  </div>
-
-  <!-- HISTORY -->
-  <div class="history-section">
-    <h3>📜 Interaction History</h3>
-    <div id="historyList"></div>
+    <input type="text" id="userInput" placeholder="Ask about climate & sustainability...">
+    <button onclick="sendMessage()">Send</button>
   </div>
 
 </div>
 
 <script>
-const chatBox=document.getElementById("chatBox");
-const historyList=document.getElementById("historyList");
-let history=[];
+const chatBox = document.getElementById("chatBox");
 
-function addMessage(text,type){
-  const div=document.createElement("div");
-  div.className="msg "+type;
-  div.textContent=text;
+/* ===== GREETING ===== */
+window.onload = () => {
+  const hour = new Date().getHours();
+  let greet = "Hello 🌱";
+
+  if(hour < 12) greet = "Good Morning 🌸";
+  else if(hour < 18) greet = "Good Afternoon 🌤️";
+  else greet = "Good Evening 🌙";
+
+  typingEffect(`${greet}! I’m EcoTrack AI. Ask me about climate change, carbon footprint, or sustainability 💚`);
+};
+
+/* ===== ADD MESSAGE ===== */
+function addMessage(text, type){
+  const div = document.createElement("div");
+  div.className = "msg " + type;
+  div.textContent = text;
   chatBox.appendChild(div);
-  chatBox.scrollTop=chatBox.scrollHeight;
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
+/* ===== TYPING EFFECT ===== */
+function typingEffect(text){
+  const div = document.createElement("div");
+  div.className = "msg bot";
+  chatBox.appendChild(div);
+
+  let i = 0;
+  const interval = setInterval(() => {
+    div.textContent += text.charAt(i);
+    i++;
+    chatBox.scrollTop = chatBox.scrollHeight;
+    if(i === text.length) clearInterval(interval);
+  }, 25);
+}
+
+/* ===== SMART FALLBACK ===== */
+function smartReply(msg){
+  if(msg.includes("carbon"))
+    return "Carbon footprint measures the greenhouse gases produced by daily activities like transport and electricity ⚡";
+
+  if(msg.includes("sdg"))
+    return "SDG 13 focuses on urgent action to combat climate change and its impacts 🌍";
+
+  if(msg.includes("student"))
+    return "Students can reduce emissions by saving energy, avoiding plastic, and spreading awareness 📘";
+
+  if(msg.includes("sustainable"))
+    return "Sustainability means living in a way that protects resources for future generations 💚";
+
+  return "That’s a thoughtful question 🌸 Climate awareness starts with curiosity!";
+}
+
+/* ===== SEND MESSAGE ===== */
 async function sendMessage(){
-  const input=document.getElementById("userInput");
-  const text=input.value.trim();
+  const input = document.getElementById("userInput");
+  const text = input.value.trim();
   if(!text) return;
 
-  addMessage(text,"user");
-  history.push("You: "+text);
-  input.value="";
+  addMessage(text, "user");
+  input.value = "";
 
-  addMessage("Thinking... ✨","bot");
+  addMessage("Thinking... ✨", "bot");
 
   try{
-    const res=await fetch("https://sdg13-backend.onrender.com/chat",{
+    const res = await fetch("https://sdg13-backend.onrender.com/chat", {
       method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({message:text})
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ message:text })
     });
-    const data=await res.json();
-    chatBox.lastChild.remove();
-    addMessage(data.reply,"bot");
-    history.push("AI: "+data.reply);
-    updateHistory();
-  }catch{
-    chatBox.lastChild.remove();
-    addMessage("❌ AI service unavailable","bot");
-  }
-}
 
-function updateHistory(){
-  historyList.innerHTML="";
-  history.forEach(h=>{
-    const div=document.createElement("div");
-    div.className="history-item";
-    div.textContent=h;
-    historyList.appendChild(div);
-  });
+    const data = await res.json();
+    chatBox.lastChild.remove();
+    typingEffect(data.reply);
+
+  } catch {
+    chatBox.lastChild.remove();
+    typingEffect(smartReply(text.toLowerCase()));
+  }
 }
 </script>
 
 </body>
 </html>
+
 
 
 
