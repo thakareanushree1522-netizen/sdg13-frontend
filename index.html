@@ -2,142 +2,148 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EcoTrack AI Chat Assistant</title>
+<title>SoftClimate AI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:'Poppins', sans-serif;
+  font-family:'Inter',sans-serif;
 }
 
 body{
-  height:100vh;
+  min-height:100vh;
+  background:linear-gradient(180deg,#f7e8ff,#ffe4f3);
   display:flex;
-  justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#f7d6ff,#fde2e4);
+  justify-content:center;
+  padding:40px;
+  color:#3a235c;
 }
 
-/* ===== CHAT CONTAINER ===== */
-.chat-container{
-  width:380px;
-  height:620px;
-  background:#ffffff;
-  border-radius:22px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.15);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
+/* ===== CONTAINER ===== */
+.wrapper{
+  width:100%;
+  max-width:850px;
+  background:#ffffffcc;
+  backdrop-filter:blur(14px);
+  border-radius:30px;
+  padding:30px;
+  box-shadow:0 30px 60px rgba(150,80,200,0.18);
 }
 
 /* ===== HEADER ===== */
-.chat-header{
-  padding:18px;
+.title{
   text-align:center;
-  background:linear-gradient(135deg,#b983ff,#ff9ecd);
-  color:white;
+  margin-bottom:25px;
 }
 
-.chat-header h2{
+.title h1{
+  font-size:34px;
   font-weight:600;
 }
 
-.chat-header p{
-  font-size:13px;
-  opacity:0.9;
+.title p{
+  margin-top:8px;
+  font-size:16px;
+  opacity:0.85;
 }
 
-/* ===== CHAT BOX ===== */
-.chat-box{
-  flex:1;
-  padding:15px;
+/* ===== CHAT AREA ===== */
+.chat-area{
+  background:#fdf7ff;
+  border-radius:24px;
+  padding:20px;
+  height:360px;
   overflow-y:auto;
-  background:#fff7fb;
+  box-shadow:inset 0 0 10px rgba(180,120,220,0.15);
 }
 
 .msg{
-  max-width:80%;
-  padding:10px 14px;
+  max-width:78%;
+  padding:14px 18px;
+  border-radius:18px;
   margin-bottom:12px;
-  border-radius:16px;
-  font-size:14px;
-  line-height:1.4;
+  font-size:15px;
+  line-height:1.5;
 }
 
 .bot{
-  background:#f0d9ff;
-  color:#4a2c6b;
-  border-top-left-radius:0;
+  background:#efe2ff;
 }
 
 .user{
-  background:#ffb3d9;
-  color:#5a0c3c;
+  background:#ffd6eb;
   margin-left:auto;
-  border-top-right-radius:0;
+  text-align:right;
 }
 
-/* ===== INPUT AREA ===== */
+/* ===== INPUT ===== */
 .input-area{
   display:flex;
-  padding:12px;
-  border-top:1px solid #eee;
-  background:#fff;
+  gap:12px;
+  margin-top:16px;
 }
 
 .input-area input{
   flex:1;
-  padding:10px 14px;
-  border-radius:20px;
-  border:1px solid #ddd;
+  padding:16px 18px;
+  border-radius:30px;
+  border:1px solid #e0c9f2;
+  font-size:15px;
   outline:none;
 }
 
 .input-area button{
-  margin-left:8px;
-  padding:10px 18px;
+  width:52px;
+  height:52px;
+  border-radius:50%;
   border:none;
-  border-radius:20px;
-  background:linear-gradient(135deg,#b983ff,#ff9ecd);
-  color:white;
+  background:linear-gradient(135deg,#d16ba5,#b76be4);
+  color:#fff;
+  font-size:18px;
   cursor:pointer;
-  font-weight:500;
 }
 
-.input-area button:hover{
-  opacity:0.9;
-}
-
-/* ===== SCROLLBAR ===== */
-.chat-box::-webkit-scrollbar{
-  width:5px;
-}
-.chat-box::-webkit-scrollbar-thumb{
-  background:#d6b3ff;
-  border-radius:10px;
+/* ===== FOOTER NOTE ===== */
+.footer{
+  text-align:center;
+  margin-top:18px;
+  font-size:13px;
+  opacity:0.75;
 }
 </style>
 </head>
 
 <body>
 
-<div class="chat-container">
+<div class="wrapper">
 
-  <div class="chat-header">
-    <h2>EcoTrack AI 🌍</h2>
-    <p>Your Climate Action Assistant</p>
+  <!-- TITLE -->
+  <div class="title">
+    <h1>SoftClimate AI</h1>
+    <p>An AI-Powered Climate Action Assistant for Carbon Awareness & Sustainability</p>
   </div>
 
-  <div class="chat-box" id="chatBox"></div>
+  <!-- CHAT -->
+  <div class="chat-area" id="chatBox">
+    <div class="msg bot">
+      Hello 🌍 I’m SoftClimate AI.  
+      Ask me anything about climate change, carbon, sustainability, or SDG 13.
+    </div>
+  </div>
 
   <div class="input-area">
-    <input type="text" id="userInput" placeholder="Ask about climate & sustainability...">
-    <button onclick="sendMessage()">Send</button>
+    <input id="userInput" placeholder="Ask a climate question..." />
+    <button onclick="sendMessage()">➤</button>
+  </div>
+
+  <div class="footer">
+    AICTE Internship · CSRBOX Capstone · Powered by Gemini API
   </div>
 
 </div>
@@ -145,90 +151,88 @@ body{
 <script>
 const chatBox = document.getElementById("chatBox");
 
-/* ===== GREETING ===== */
-window.onload = () => {
-  const hour = new Date().getHours();
-  let greet = "Hello 🌱";
-
-  if(hour < 12) greet = "Good Morning 🌸";
-  else if(hour < 18) greet = "Good Afternoon 🌤️";
-  else greet = "Good Evening 🌙";
-
-  typingEffect(`${greet}! I’m EcoTrack AI. Ask me about climate change, carbon footprint, or sustainability 💚`);
-};
-
 /* ===== ADD MESSAGE ===== */
-function addMessage(text, type){
-  const div = document.createElement("div");
-  div.className = "msg " + type;
-  div.textContent = text;
+function addMessage(text,type){
+  const div=document.createElement("div");
+  div.className="msg "+type;
+  div.textContent=text;
   chatBox.appendChild(div);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-/* ===== TYPING EFFECT ===== */
-function typingEffect(text){
-  const div = document.createElement("div");
-  div.className = "msg bot";
-  chatBox.appendChild(div);
-
-  let i = 0;
-  const interval = setInterval(() => {
-    div.textContent += text.charAt(i);
-    i++;
-    chatBox.scrollTop = chatBox.scrollHeight;
-    if(i === text.length) clearInterval(interval);
-  }, 25);
-}
-
-/* ===== SMART FALLBACK ===== */
+/* ===== SMART LOCAL AI (CLIMATE BRAIN) ===== */
 function smartReply(msg){
-  if(msg.includes("carbon"))
-    return "Carbon footprint measures the greenhouse gases produced by daily activities like transport and electricity ⚡";
+  msg = msg.toLowerCase();
 
-  if(msg.includes("sdg"))
-    return "SDG 13 focuses on urgent action to combat climate change and its impacts 🌍";
+  if(msg === "hi" || msg === "hello" || msg.includes("hii")){
+    return "Hello 🌱 I’m your Climate AI assistant. Feel free to ask about carbon, climate change, global warming, or sustainability.";
+  }
 
-  if(msg.includes("student"))
-    return "Students can reduce emissions by saving energy, avoiding plastic, and spreading awareness 📘";
+  if(msg.includes("what is carbon")){
+    return "Carbon is a natural element found in all living things. In climate science, it usually refers to carbon dioxide (CO₂), a greenhouse gas released from vehicles, industries, electricity use, and burning fossil fuels. Excess CO₂ causes global warming.";
+  }
 
-  if(msg.includes("sustainable"))
-    return "Sustainability means living in a way that protects resources for future generations 💚";
+  if(msg.includes("carbon footprint")){
+    return "A carbon footprint is the total amount of greenhouse gases produced by human activities such as transportation, electricity consumption, food habits, and industrial processes. It is measured in CO₂ equivalent.";
+  }
 
-  return "That’s a thoughtful question 🌸 Climate awareness starts with curiosity!";
+  if(msg.includes("climate change")){
+    return "Climate change refers to long-term changes in Earth's temperature and weather patterns. It is mainly caused by human activities like burning fossil fuels, deforestation, and industrial pollution.";
+  }
+
+  if(msg.includes("global warming")){
+    return "Global warming is the gradual increase in Earth’s average temperature due to excessive greenhouse gases like carbon dioxide and methane trapping heat in the atmosphere.";
+  }
+
+  if(msg.includes("greenhouse effect")){
+    return "The greenhouse effect is a natural process where gases like CO₂ trap heat in Earth's atmosphere. However, excessive greenhouse gases intensify this effect, leading to climate imbalance.";
+  }
+
+  if(msg.includes("sdg")){
+    return "SDG 13 – Climate Action aims to take urgent steps to combat climate change and its impacts through awareness, innovation, policy, and sustainable development.";
+  }
+
+  if(msg.includes("sustainability")){
+    return "Sustainability means meeting present needs without harming future generations. It focuses on environmental protection, responsible resource use, and long-term ecological balance.";
+  }
+
+  return "That’s an important climate question 🌍. Climate science focuses on reducing emissions, protecting ecosystems, and building a sustainable future.";
 }
 
 /* ===== SEND MESSAGE ===== */
 async function sendMessage(){
-  const input = document.getElementById("userInput");
-  const text = input.value.trim();
+  const input=document.getElementById("userInput");
+  const text=input.value.trim();
   if(!text) return;
 
-  addMessage(text, "user");
-  input.value = "";
+  addMessage(text,"user");
+  input.value="";
 
-  addMessage("Thinking... ✨", "bot");
+  addMessage("Thinking... ✨","bot");
 
+  /* TRY BACKEND FIRST */
   try{
-    const res = await fetch("https://sdg13-backend.onrender.com/chat", {
+    const res=await fetch("https://sdg13-backend.onrender.com/chat",{
       method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body:JSON.stringify({ message:text })
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({message:text})
     });
 
-    const data = await res.json();
+    const data=await res.json();
     chatBox.lastChild.remove();
-    typingEffect(data.reply);
+    addMessage(data.reply,"bot");
 
-  } catch {
+  }catch{
+    /* FALLBACK TO SMART LOCAL AI */
     chatBox.lastChild.remove();
-    typingEffect(smartReply(text.toLowerCase()));
+    addMessage(smartReply(text),"bot");
   }
 }
 </script>
 
 </body>
 </html>
+
 
 
 
