@@ -261,12 +261,12 @@ const chatBox=document.getElementById("chatBox");
 const historyList=document.getElementById("historyList");
 let history=[];
 
-/* ===== LOCAL CLIMATE INTELLIGENCE ===== */
+/* ===== ENHANCED LOCAL CLIMATE INTELLIGENCE ===== */
 function localClimateReply(msg){
   msg = msg.toLowerCase();
 
   if(["hi","hii","hello","hey"].includes(msg))
-    return "Hello 🌱 I’m your Climate AI Assistant. Ask me anything related to climate change or sustainability.";
+    return "Hello 🌱 I’m your Climate AI Assistant. Ask me anything related to climate change, carbon, or sustainability.";
 
   if(msg.includes("carbon"))
     return "Carbon is a natural element. In climate science, it usually refers to CO₂, a greenhouse gas that traps heat in the atmosphere.";
@@ -286,9 +286,37 @@ function localClimateReply(msg){
   if(msg.includes("sdg"))
     return "SDG 13 focuses on urgent action to combat climate change and its impacts.";
 
-  return null;
+  if(msg.includes("renewable"))
+    return "Renewable energy comes from sources like the sun, wind, and water, which do not run out and produce less pollution.";
+
+  if(msg.includes("pollution"))
+    return "Pollution is the introduction of harmful substances into the environment, causing health and climate issues.";
+
+  if(msg.includes("deforestation"))
+    return "Deforestation is the clearing of forests, which reduces carbon absorption and harms biodiversity.";
+
+  if(msg.includes("greenhouse gases"))
+    return "Greenhouse gases like CO₂, methane, and nitrous oxide trap heat in the atmosphere, causing global warming.";
+
+  if(msg.includes("ocean"))
+    return "Oceans absorb carbon dioxide and heat, but climate change causes ocean warming and acidification, impacting marine life.";
+
+  if(msg.includes("recycling"))
+    return "Recycling reduces waste, saves energy, and helps reduce greenhouse gas emissions.";
+
+  if(msg.includes("emission"))
+    return "Emissions refer to the release of greenhouse gases into the atmosphere from human activities.";
+
+  if(msg.includes("energy"))
+    return "Energy efficiency and renewable energy are key to reducing carbon footprint and combating climate change.";
+
+  if(msg.includes("climate action"))
+    return "Climate action involves reducing emissions, using renewable energy, conserving resources, and promoting sustainability.";
+
+  return null; // fallback if no keyword matched
 }
 
+/* ===== CHAT FUNCTIONS ===== */
 function addMessage(text,type){
   const div=document.createElement("div");
   div.className="msg "+type;
@@ -335,10 +363,9 @@ async function sendMessage(){
 }
 
 function newChat(){
-  chatBox.innerHTML = `
-    <div class="msg bot">
-      Hello 🌱 I’m your AI Climate Assistant. How can I help today?
-    </div>`;
+  chatBox.innerHTML = `<div class="msg bot">Hello 🌱 I’m your AI Climate Assistant. How can I help today?</div>`;
+  history=[];
+  updateHistory();
 }
 
 function calculateImpact(){
