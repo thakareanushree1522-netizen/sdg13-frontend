@@ -26,21 +26,22 @@ body{
   width:240px;
   background:#1b5e20;
   color:#fff;
-  padding:25px 15px;
+  padding:30px 15px;
 }
 
 .sidebar h2{
-  margin-bottom:35px;
-  font-size:20px;
+  margin-bottom:40px;
+  font-size:22px;
   text-align:center;
 }
 
 .menu-btn{
-  padding:14px;
-  margin-bottom:12px;
+  padding:14px 16px;
+  margin-bottom:14px;
   border-radius:12px;
   cursor:pointer;
   transition:0.2s;
+  font-size:15px;
 }
 
 .menu-btn:hover,
@@ -51,8 +52,24 @@ body{
 /* ===== MAIN ===== */
 .main{
   flex:1;
-  padding:25px;
+  padding:30px 40px;
   overflow:hidden;
+}
+
+/* ===== HEADER ===== */
+.header{
+  margin-bottom:25px;
+}
+
+.header h1{
+  font-size:26px;
+  color:#1b5e20;
+  margin-bottom:6px;
+}
+
+.header p{
+  color:#555;
+  font-size:14px;
 }
 
 /* ===== SECTIONS ===== */
@@ -60,22 +77,26 @@ body{
 .section.active{display:block;}
 
 /* ===== CHAT ===== */
+.chat-container{
+  max-width:900px;
+}
+
 .chat-box{
-  height:70vh;
+  height:65vh;
   background:#fff;
   border-radius:16px;
-  padding:18px;
+  padding:20px;
   overflow-y:auto;
   box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
 .msg{
-  max-width:75%;
+  max-width:70%;
   padding:14px 18px;
   border-radius:18px;
-  margin-bottom:12px;
+  margin-bottom:14px;
   line-height:1.5;
-  font-size:16px;
+  font-size:15px;
 }
 
 .bot{
@@ -93,20 +114,20 @@ body{
 .chat-input{
   display:flex;
   gap:12px;
-  margin-top:15px;
+  margin-top:18px;
 }
 
 .chat-input input{
   flex:1;
-  padding:16px 20px;
-  border-radius:35px;
+  padding:16px 22px;
+  border-radius:30px;
   border:1px solid #ccc;
-  font-size:18px;
+  font-size:16px;
 }
 
 .chat-input button{
-  width:48px;
-  height:48px;
+  width:52px;
+  height:52px;
   border-radius:50%;
   border:none;
   background:#2e7d32;
@@ -119,9 +140,14 @@ body{
 .card{
   max-width:480px;
   background:#fff;
-  padding:25px;
-  border-radius:16px;
+  padding:28px;
+  border-radius:18px;
   box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.card h3{
+  color:#1b5e20;
+  margin-bottom:10px;
 }
 
 .card input{
@@ -137,7 +163,7 @@ body{
   width:100%;
   padding:14px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   background:#2e7d32;
   color:#fff;
   font-size:16px;
@@ -145,18 +171,22 @@ body{
 }
 
 .result{
-  margin-top:15px;
-  padding:12px;
-  border-radius:10px;
+  margin-top:18px;
+  padding:14px;
+  border-radius:12px;
   font-weight:600;
 }
 
 /* ===== HISTORY ===== */
+.history-container{
+  max-width:700px;
+}
+
 .history-item{
   background:#fff;
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:10px;
+  padding:14px;
+  border-radius:12px;
+  margin-bottom:12px;
   box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 </style>
@@ -176,22 +206,29 @@ body{
 <!-- MAIN -->
 <div class="main">
 
+  <div class="header">
+    <h1>AI-Powered Climate Action Assistant</h1>
+    <p>Carbon Awareness • Sustainability • SDG 13</p>
+  </div>
+
   <!-- CHAT -->
   <div id="chat" class="section active">
-    <div class="chat-box" id="chatBox">
-      <div class="msg bot">Hello 🌱 I’m your Climate AI assistant.</div>
-    </div>
+    <div class="chat-container">
+      <div class="chat-box" id="chatBox">
+        <div class="msg bot">Hello 🌱 I’m your Climate AI assistant.</div>
+      </div>
 
-    <div class="chat-input">
-      <input id="userInput" placeholder="Ask about climate action, sustainability, carbon footprint..." />
-      <button onclick="sendMessage()">➤</button>
+      <div class="chat-input">
+        <input id="userInput" placeholder="Ask about climate action, sustainability, carbon footprint..." />
+        <button onclick="sendMessage()">➤</button>
+      </div>
     </div>
   </div>
 
   <!-- IMPACT -->
   <div id="impact" class="section">
     <div class="card">
-      <h3>🌱 Carbon Footprint Checker</h3><br>
+      <h3>🌱 Carbon Footprint Checker</h3>
 
       <input id="transport" type="number" placeholder="Transport km/day">
       <input id="electricity" type="number" placeholder="Electricity units/month">
@@ -204,14 +241,15 @@ body{
 
   <!-- HISTORY -->
   <div id="history" class="section">
-    <h3>📜 Activity History</h3><br>
-    <div id="historyList"></div>
+    <div class="history-container">
+      <h3>📜 Activity History</h3><br>
+      <div id="historyList"></div>
+    </div>
   </div>
 
 </div>
 
 <script>
-/* ===== NAVIGATION ===== */
 function showSection(id, btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('active'));
@@ -219,7 +257,6 @@ function showSection(id, btn){
   btn.classList.add('active');
 }
 
-/* ===== CHAT ===== */
 const chatBox=document.getElementById("chatBox");
 const historyList=document.getElementById("historyList");
 let history=[];
@@ -262,7 +299,6 @@ async function sendMessage(){
   }
 }
 
-/* ===== IMPACT ===== */
 function calculateImpact(){
   const t=Number(transport.value)||0;
   const e=Number(electricity.value)||0;
@@ -282,7 +318,6 @@ function calculateImpact(){
   updateHistory();
 }
 
-/* ===== HISTORY ===== */
 function updateHistory(){
   historyList.innerHTML="";
   history.forEach(h=>{
@@ -296,3 +331,4 @@ function updateHistory(){
 
 </body>
 </html>
+
