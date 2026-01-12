@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ClimateSense AI – SDG 13</title>
+<title>SDG 13 – Climate AI Assistant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,85 +16,71 @@
 }
 
 body{
-  background:linear-gradient(120deg,#f1f8f5,#e8f5e9);
+  background:#f3f6f4;
   min-height:100vh;
 }
 
-/* ===== HERO ===== */
-.hero{
-  padding:40px 20px;
-  text-align:center;
+/* ===== TOP NAV ===== */
+.navbar{
+  height:70px;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
 }
 
-.hero h1{
-  font-size:34px;
+.logo{
+  font-size:22px;
+  font-weight:600;
   color:#1b5e20;
 }
 
-.hero p{
-  margin-top:10px;
-  font-size:16px;
-  color:#444;
-}
-
-/* ===== WORKSPACE ===== */
-.workspace{
-  max-width:1100px;
-  margin:30px auto;
-  background:#fff;
-  border-radius:24px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.1);
-  overflow:hidden;
-}
-
-/* ===== TABS ===== */
-.tabs{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  padding:20px;
-  background:#f4f6f5;
-}
-
-.tab-btn{
-  padding:12px 24px;
-  border-radius:30px;
+.nav-btns button{
+  margin-left:10px;
+  padding:10px 18px;
   border:none;
-  background:#e0f2f1;
+  border-radius:25px;
+  background:#e8f5e9;
   color:#1b5e20;
   font-size:14px;
   cursor:pointer;
 }
 
-.tab-btn.active{
+.nav-btns button.active{
   background:#2e7d32;
   color:#fff;
 }
 
-/* ===== PANELS ===== */
-.panel{
-  display:none;
-  padding:30px;
+/* ===== CONTENT ===== */
+.content{
+  padding:35px;
 }
 
-.panel.active{
-  display:block;
-}
+.section{display:none;}
+.section.active{display:block;}
 
 /* ===== CHAT ===== */
-.chat-area{
+.chat-layout{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1.3fr 1fr;
   gap:25px;
 }
 
 .chat-box{
-  height:420px;
-  background:#f9fdfb;
+  background:#fff;
   border-radius:20px;
   padding:20px;
+  height:70vh;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.chat-messages{
+  flex:1;
   overflow-y:auto;
-  border:1px solid #e0e0e0;
 }
 
 .msg{
@@ -103,6 +89,7 @@ body{
   border-radius:18px;
   margin-bottom:12px;
   font-size:15px;
+  line-height:1.5;
 }
 
 .bot{
@@ -140,34 +127,39 @@ body{
   cursor:pointer;
 }
 
-/* ===== INSIGHT ===== */
-.insight{
-  background:linear-gradient(160deg,#1b5e20,#388e3c);
+/* ===== INFO CARD ===== */
+.info-card{
+  background:linear-gradient(180deg,#1b5e20,#2e7d32);
   color:#fff;
   padding:30px;
   border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
 
-.insight h3{
+.info-card h2{
   margin-bottom:15px;
 }
 
-.insight p{
+.info-card p{
   line-height:1.6;
   font-size:15px;
 }
 
 /* ===== IMPACT ===== */
-.impact-box{
-  max-width:500px;
-  margin:auto;
-  background:#f9fdfb;
+.impact-container{
+  max-width:520px;
+  background:#fff;
   padding:30px;
   border-radius:20px;
-  border:1px solid #e0e0e0;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
 
-.impact-box input{
+.impact-container h2{
+  color:#1b5e20;
+  margin-bottom:15px;
+}
+
+.impact-container input{
   width:100%;
   padding:14px;
   margin-bottom:15px;
@@ -175,7 +167,7 @@ body{
   border:1px solid #ccc;
 }
 
-.impact-box button{
+.impact-container button{
   width:100%;
   padding:14px;
   border:none;
@@ -188,88 +180,85 @@ body{
 
 .result{
   margin-top:15px;
-  padding:14px;
+  padding:15px;
   border-radius:10px;
   font-weight:600;
 }
 
 /* ===== HISTORY ===== */
-.history-item{
-  background:#f9fdfb;
-  padding:15px;
-  border-radius:12px;
+.history-card{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
   margin-bottom:12px;
-  border:1px solid #e0e0e0;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
 }
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>🌍 ClimateSense AI</h1>
-  <p>AI-powered assistant for Carbon Awareness & Sustainable Decisions</p>
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">🌍 Climate AI Assistant</div>
+  <div class="nav-btns">
+    <button class="active" onclick="showSection('chat',this)">Chat</button>
+    <button onclick="showSection('impact',this)">Impact</button>
+    <button onclick="showSection('history',this)">History</button>
+  </div>
 </div>
 
-<!-- WORKSPACE -->
-<div class="workspace">
-
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('chat',this)">AI Chat</button>
-  <button class="tab-btn" onclick="switchTab('impact',this)">Carbon Impact</button>
-  <button class="tab-btn" onclick="switchTab('history',this)">History</button>
-</div>
+<div class="content">
 
 <!-- CHAT -->
-<div id="chat" class="panel active">
-  <div class="chat-area">
-    <div>
-      <div class="chat-box" id="chatBox">
-        <div class="msg bot">Hello 🌱 I'm ClimateSense AI.</div>
+<div id="chat" class="section active">
+  <div class="chat-layout">
+    <div class="chat-box">
+      <div class="chat-messages" id="chatBox">
+        <div class="msg bot">Hello 🌱 I am your AI Climate Assistant.</div>
       </div>
       <div class="chat-input">
-        <input id="userInput" placeholder="Ask about climate action, SDG 13, carbon footprint..." />
+        <input id="userInput" placeholder="Ask about climate change, SDG 13..." />
         <button onclick="sendMessage()">➤</button>
       </div>
     </div>
 
-    <div class="insight">
-      <h3>AI Climate Insights</h3>
+    <div class="info-card">
+      <h2>Why Climate AI?</h2>
       <p>
-        ClimateSense AI evaluates environmental impact,
-        promotes sustainability awareness, and supports SDG 13
-        through intelligent climate conversations.
+        This AI assistant helps users understand climate impact,
+        calculate carbon footprint, and receive sustainability guidance.
+        <br><br>
+        Built for SDG 13 – Climate Action using AI & real-time analysis.
       </p>
     </div>
   </div>
 </div>
 
 <!-- IMPACT -->
-<div id="impact" class="panel">
-  <div class="impact-box">
-    <h3>🌱 Carbon Footprint Analyzer</h3><br>
+<div id="impact" class="section">
+  <div class="impact-container">
+    <h2>🌱 Carbon Footprint Calculator</h2>
     <input id="transport" type="number" placeholder="Transport km/day">
     <input id="electricity" type="number" placeholder="Electricity units/month">
     <input id="meat" type="number" placeholder="Meat meals/week">
-    <button onclick="calculateImpact()">Analyze</button>
+    <button onclick="calculateImpact()">Analyze Impact</button>
     <div class="result" id="impactResult"></div>
   </div>
 </div>
 
 <!-- HISTORY -->
-<div id="history" class="panel">
-  <h3>📜 Interaction Log</h3><br>
+<div id="history" class="section">
+  <h2>📜 User Activity History</h2><br>
   <div id="historyList"></div>
 </div>
 
 </div>
 
 <script>
-function switchTab(id,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btns button').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
 }
@@ -336,7 +325,7 @@ function updateHistory(){
   historyList.innerHTML="";
   history.forEach(h=>{
     const div=document.createElement("div");
-    div.className="history-item";
+    div.className="history-card";
     div.textContent=h;
     historyList.appendChild(div);
   });
@@ -345,6 +334,7 @@ function updateHistory(){
 
 </body>
 </html>
+
 
 
 
